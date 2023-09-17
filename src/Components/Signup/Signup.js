@@ -6,7 +6,7 @@ import "./Signup.css";
 
 export default function Signup() {
   const history=useHistory()
-  const [Username, setUsername] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
@@ -16,17 +16,28 @@ const {firebase}=useContext(FirebaseContext)
   const handleSubmit=(e)=>{ 
     e.preventDefault();
     firebase.auth().createUserWithEmailAndPassword(email, password).then((result)=>{
-       result.user.updateProfile({displayName:Username}).then(()=>{
-        firebase.firestore().collection('users').add({
-          id:result.user.uid,
-          Username:Username,
-          phone:phone,  
+       result.user.updateProfile({displayName:username}).then(()=>{
+        // firebase.firestore().collection('users').add({
+        //   id:result.user.uid,
+        //   username:username,
+        //   phone:phone,  
+        // })
+        const userRef = firebase.firestore().collection('users').doc(result.user.uid);
+
+        userRef.set({
+          id: result.user.uid,
+          username: username,
+          phone: phone,
         }).then(()=>{
-               history.push('/login')
+               history.push("/login")
+        }).catch((error)=>{
+          console.log(error)
         })
        })
     })
   }
+  
+  
   return (
     <div>
       <div className="signupParentDiv">
@@ -37,7 +48,7 @@ const {firebase}=useContext(FirebaseContext)
           <input
             className="input"
             type="text"
-            value={Username}
+            value={username}
             onChange={(e) => setUsername(e.target.value)}
             id="fname"
             name="name"
