@@ -5,6 +5,7 @@ import "./App.css";
 import Home from "./Pages/Home";
 import Signup from "./Pages/Signup";
 import Login from './Pages/Login'
+import Create from './Pages/Create';
 import { AuthContext, FirebaseContext } from "./store/Context.1";
 
 function App  () {
@@ -23,6 +24,7 @@ return(
       <Route path="/" exact component={Home} />
       <Route path="/signup"  component={Signup} />
       <Route path="/login"  component={Login} />
+      <Route path="/create"  component={Create} />
     </Router>
   </div>
 );
