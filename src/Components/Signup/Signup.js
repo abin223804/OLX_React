@@ -17,18 +17,12 @@ const {firebase}=useContext(FirebaseContext)
     e.preventDefault();
     firebase.auth().createUserWithEmailAndPassword(email, password).then((result)=>{
        result.user.updateProfile({displayName:username}).then(()=>{
-        // firebase.firestore().collection('users').add({
-        //   id:result.user.uid,
-        //   username:username,
-        //   phone:phone,  
-        // })
-        const userRef = firebase.firestore().collection('users').doc(result.user.uid);
-
-        userRef.set({
-          id: result.user.uid,
-          username: username,
-          phone: phone,
-        }).then(()=>{
+        firebase.firestore().collection('users').add({
+          id:result.user.uid,
+          username:username,
+          phone:phone,  
+        })
+      .then(()=>{
                history.push("/login")
         }).catch((error)=>{
           console.log(error)
