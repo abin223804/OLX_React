@@ -1,23 +1,26 @@
-import React,{useState,useContext} from 'react';
-import { FirebaseContext } from '../../store/Context.1';
-import {useHistory,Link} from 'react-router-dom'
-import Logo from '../../olx-logo.png';
-import './Login.css';
+import React, { useState, useContext } from "react";
+import { FirebaseContext } from "../../store/Context.1";
+import { useHistory, Link } from "react-router-dom";
+import Logo from "../../olx-logo.png";
+import "./Login.css";
 
 function Login() {
-  const history =useHistory()
-  const[email,setEmail]=useState('')
-  const[password,setPassword]=useState('')
-  const{firebase}=useContext(FirebaseContext)
-const submitLogin=(e)=>{
-  e.preventDefault();
-  firebase.auth().signInWithEmailAndPassword(email,password).then(()=>{
- history.push("/")
-  }).catch((error)=>{
-      alert(error.message)
-  })
-}
-
+  const history = useHistory();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { firebase } = useContext(FirebaseContext);
+  const submitLogin = (e) => {
+    e.preventDefault();
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(() => {
+        history.push("/");
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  };
 
   return (
     <div>
@@ -31,7 +34,7 @@ const submitLogin=(e)=>{
             type="email"
             id="fname"
             value={email}
-            onChange={(e)=>{
+            onChange={(e) => {
               setEmail(e.target.value);
             }}
             name="email"
@@ -45,7 +48,7 @@ const submitLogin=(e)=>{
             type="password"
             id="lname"
             value={password}
-            onChange={(e)=>{
+            onChange={(e) => {
               setPassword(e.target.value);
             }}
             name="password"
@@ -55,7 +58,11 @@ const submitLogin=(e)=>{
           <br />
           <button>Login</button>
         </form>
-        <a><Link to='Signup' style={{color:'black'}} >Signup</Link></a>
+        <a>
+          <Link to="Signup" style={{ color: "black" }}>
+            Signup
+          </Link>
+        </a>
       </div>
     </div>
   );
