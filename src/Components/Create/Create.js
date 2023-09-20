@@ -1,13 +1,25 @@
 import React, { Fragment, useState } from "react";
 import "./Create.css";
 import Header from "../Header/Header";
+import {FirebaseContext,AuthContext} from '../../store/Context.1'
+import { useContext } from "react";
+
 
 const Create = () => {
+  const {firebase} =useContext(FirebaseContext)
+  const{user}=useContext(AuthContext)
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
   const [image, setImage] = useState(null);
-
+  const handleSubmit=()=>{
+      firebase.storage().ref(`/image/${image.name}`).put(image).then(({ref})=>{
+            ref.getDownloadURL().then((url)=>{
+              console.log(url);
+            })
+      })
+ 
+  }
   return (
     <Fragment>
       <Header />
@@ -69,7 +81,7 @@ const Create = () => {
             }}
           />
           <br />
-          <button className="uploadBtn">upload and Submit</button>
+          <button onClick={handleSubmit} className="uploadBtn">upload and Submit</button>
         </div>
       </card>
     </Fragment>
