@@ -67,7 +67,9 @@ function Header() {
           <SellButton></SellButton>
           <div className="sellMenuContent">
             <SellButtonPlus></SellButtonPlus>
-            <span>SELL</span>
+            <span>
+              <Link to='Create' style={{color:'black'}}>SELL</Link>
+            </span>
           </div>
         </div>
       </div>
