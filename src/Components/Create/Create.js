@@ -11,6 +11,7 @@ const Create = () => {
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
   const [image, setImage] = useState(null);
+  const date=new Date();
   const handleSubmit = () => {
     firebase
       .storage()
@@ -19,6 +20,16 @@ const Create = () => {
       .then(({ ref }) => {
         ref.getDownloadURL().then((url) => {
           console.log(url);
+          firebase.firestore().collection('products').add({
+            name,
+            category,
+            price,
+            url,
+            userId:user.uid,
+            createdAt:date.toDateString()
+
+          })
+
         });
       });
   };
